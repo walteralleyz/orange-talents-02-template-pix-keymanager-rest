@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.zup";
+option java_outer_classname = "Keymgr";
+option objc_class_prefix = "HLW";
+
+package br.com.zup;
+
+service KeymgrRegistryService {
+  rpc registry (KeymgrRegistryRequest) returns (KeymgrRegistryResponse) {}
+}
+
+service KeymgrRemoveService {
+  rpc remove (KeymgrExcludeRequest) returns (KeymgrExcludeResponse) {}
+}
+
+service KeymgrInternReadService {
+  rpc read (KeymgrInternReadRequest) returns (KeymgrReadResponse) {}
+}
+
+service KeymgrReadAllService {
+  rpc readAll (KeymgrReadAllRequest) returns (KeymgrReadAllResponse) {}
+}
+
+enum KeyType {
+  KEY = 0;
+  CPF = 1;
+  PHONE = 2;
+  EMAIL = 3;
+  UUID = 4;
+}
+
+enum AccountType {
+  ACCOUNT = 0;
+  CACC = 1;
+  SVGS = 2;
+}
+
+message AccountInfo {
+  string name = 1;
+  string cpf = 2;
+  string bankName = 3;
+  string branch = 4;
+  string accountNumber = 5;
+  AccountType accountType = 6;
+}
+
+message ReadAllResponse {
+  int32 id = 1;
+  string clientId = 2;
+  KeyType keyType = 3;
+  string pix = 4;
+  AccountType accountType = 5;
+  string createdAt = 6;
+}
+
+message KeymgrRegistryRequest {
+  string pix = 1;
+  KeyType pixType = 2;
+  string clientId = 3;
+  AccountType accountType = 4;
+}
+
+message KeymgrRegistryResponse {
+  int32 id = 1;
+}
+
+message KeymgrExcludeRequest {
+  string pix = 1;
+  string clientId = 2;
+}
+
+message KeymgrExcludeResponse {
+  string pix = 1;
+  string clientId = 2;
+}
+
+message KeymgrInternReadRequest {
+  int32 id = 1;
+  string clientId = 2;
+}
+
+message KeymgrReadResponse {
+    int32 id = 1;
+    string clientId = 2;
+    KeyType pixType = 3;
+    string pix = 4;
+    string createdAt = 5;
+    AccountInfo accountInfo = 6;
+}
+
+message KeymgrReadAllRequest {
+  string clientId = 1;
+}
+
+message KeymgrReadAllResponse {
+  repeated ReadAllResponse response = 1;
+}

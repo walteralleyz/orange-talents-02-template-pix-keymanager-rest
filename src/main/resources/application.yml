@@ -1,0 +1,10 @@
+micronaut:
+  application:
+    name: keymgrrest
+
+grpc:
+  client:
+    plaintext: true
+    max-retry-attempts: 10
+
+grpc-host: ${GRPC_URI}
